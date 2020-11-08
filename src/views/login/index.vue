@@ -141,6 +141,7 @@ export default {
     }
   },
   created() {
+    this.$router.push('/signin-redirect-oidc')
     // window.addEventListener('storage', this.afterQRScan)
   },
   mounted() {
