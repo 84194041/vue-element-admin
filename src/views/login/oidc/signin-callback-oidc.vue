@@ -22,8 +22,7 @@ export default {
         this.state = 'user geting...'
         var user = await mgr.getUser().catch(e => { this.state = e })
         this.state = 'user geted.'
-        console.log('user:')
-        console.log(user)
+
         if (user) {
           this.user = user
           this.state = 'externalLogining...'
@@ -35,12 +34,9 @@ export default {
           // }).catch(e => {
           //   this.state = e
           // })
-          console.log('0')
           await this.login({
-              //access_token: user.access_token
-              username: 'admin',
-              password: '111111',
-              access_token: 'admin-token'
+              access_token: user.access_token
+              //access_token: 'admin-token'
             }
           ).catch(e => {
             this.state = e

@@ -12,6 +12,12 @@ const tableRouter = {
   },
   children: [
     {
+      path: 'tenant',
+      component: () => import('@/views/system/tenant/index'),
+      name: '租户管理',
+      meta: { title: '租户管理' }
+    },
+    {
       path: 'payment',
       component: () => import('@/views/system/payment'),
       name: '支付宝支付',
