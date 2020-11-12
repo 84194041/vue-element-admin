@@ -8,20 +8,26 @@ const tableRouter = {
   name: '系统设置',
   meta: {
     title: '系统设置',
-    icon: 'table'
+    icon: 'el-icon-setting'
   },
   children: [
     {
       path: 'tenant',
       component: () => import('@/views/system/tenant/index'),
       name: '租户管理',
-      meta: { title: '租户管理' }
+      meta: { title: '租户管理', icon: 'table' }
     },
     {
       path: 'payment',
       component: () => import('@/views/system/payment'),
       name: '支付宝支付',
-      meta: { title: '支付宝支付' }
+      meta: { title: '支付宝支付', icon: 'money' }
+    },
+    {
+      path: 'index',
+      component: () => import('@/views/icons/index'),
+      name: 'Icons',
+      meta: { title: 'icons', icon: 'icon' }
     }
   ]
 }

@@ -79,9 +79,9 @@ export default {
     RaddarChart,
     PieChart,
     BarChart,
-    TransactionTable,
-    TodoList,
-    BoxCard
+    //TransactionTable,
+    //TodoList,
+    //BoxCard
   },
   data() {
     return {
