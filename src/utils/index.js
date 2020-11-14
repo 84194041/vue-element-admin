@@ -9,6 +9,8 @@
  * @returns {string | null}
  */
 export function parseTime(time, cFormat) {
+  time = time.replace(/T/g, ' ').replace(/Z/g, '')
+
   if (arguments.length === 0 || !time) {
     return null
   }
@@ -57,6 +59,8 @@ export function parseTime(time, cFormat) {
  * @returns {string}
  */
 export function formatTime(time, option) {
+  time = time.replace(/T/g, ' ').replace(/Z/g, '')
+
   if (('' + time).length === 10) {
     time = parseInt(time) * 1000
   } else {

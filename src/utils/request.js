@@ -44,9 +44,16 @@ service.interceptors.response.use(
    */
   response => {
     const res = response.data
-    console.log('res')
-    console.log(res)
-    return res
+
+    if (res.code !== 1) {
+      Message({
+        message: res.message || 'Error',
+        type: 'error',
+        duration: 5 * 1000
+      })
+    } else {
+      return res
+    }
 
     // if the custom code is not 20000, it is judged as an error.
     // if (res.code !== 0) {
