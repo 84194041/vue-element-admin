@@ -4,6 +4,9 @@
       <el-date-picker v-model="listQuery.beginDate" type="datetime" format="yyyy-MM-dd HH:mm:ss" class="filter-item" placeholder="开始创建时间" />
       <el-date-picker v-model="listQuery.endDate" type="datetime" format="yyyy-MM-dd HH:mm:ss" class="filter-item" placeholder="结束创建时间" />
       <el-input v-model="listQuery.name" placeholder="租户名称" style="width: 200px" class="filter-item" @keyup.enter.native="handleFilter" />
+      <el-select v-model="listQuery.enabled" class="filter-item" placeholder="租户状态">
+          <el-option v-for="item in statusOptions" :key="item.id" :label="item.name" :value="item.id" />
+      </el-select>
       <el-button v-waves class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-search" @click="handleFilter">{{ $t('table.search') }}</el-button>
       <el-button v-waves class="filter-item" type="warning" icon="el-icon-delete" @click="resetQueryForm">{{ $t('table.reset') }}</el-button>
       <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-plus" @click="handleCreate">{{ $t('table.add') }}</el-button>
@@ -85,11 +88,11 @@ export default {
   directives: { waves },
   filters: {
     statusFilter(status) {
-      const statusMap = { true: 'success', false: 'danger' }
+      const statusMap = { 1: 'success', 0: 'danger' }
       return statusMap[status]
     },
     statusStrFilter(status) {
-      return status === true ? '启用' : '禁用'
+      return status === 1 ? '启用' : '禁用'
     }
   },
   data() {
@@ -103,7 +106,8 @@ export default {
         pageSize: 20,
         beginDate: '',
         endDate: '',
-        name: ''
+        name: '',
+        enabled: ''
       },
       statusOptions: [
         { id: 0, name: '禁用' },
@@ -113,6 +117,7 @@ export default {
       dialogFormVisible: false,
       textMap: { update: '编辑', create: '创建' },
       temp: {
+        id: 0,
         name: '',
         description: '',
         enabled: 1
@@ -181,11 +186,6 @@ export default {
     },
     handleUpdate(row) {
       this.temp = Object.assign({}, row)
-      if (this.temp.enabled === true) {
-        this.temp.enabled = 1
-      } else {
-        this.temp.enabled = 0
-      }
       this.dialogStatus = 'update'
       this.dialogFormVisible = true
       this.$nextTick(() => {
