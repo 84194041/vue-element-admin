@@ -18,6 +18,12 @@ const tableRouter = {
       meta: { title: '租户管理', icon: 'table' }
     },
     {
+      path: 'role',
+      component: () => import('@/views/system/role/index'),
+      name: '角色管理',
+      meta: { title: '角色管理', icon: 'peoples' }
+    },
+    {
       path: 'payment',
       component: () => import('@/views/system/payment'),
       name: '支付宝支付',
