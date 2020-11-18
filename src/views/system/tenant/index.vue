@@ -5,7 +5,7 @@
       <el-date-picker v-model="listQuery.endDate" type="datetime" format="yyyy-MM-dd HH:mm:ss" class="filter-item" placeholder="结束创建时间" />
       <el-input v-model="listQuery.name" placeholder="租户名称" style="width: 200px" class="filter-item" @keyup.enter.native="handleFilter" />
       <el-select v-model="listQuery.enabled" class="filter-item" placeholder="租户状态">
-          <el-option v-for="item in statusOptions" :key="item.id" :label="item.name" :value="item.id" />
+        <el-option v-for="item in statusOptions" :key="item.id" :label="item.name" :value="item.id" />
       </el-select>
       <el-button v-waves class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-search" @click="handleFilter">{{ $t('table.search') }}</el-button>
       <el-button v-waves class="filter-item" type="warning" icon="el-icon-delete" @click="resetQueryForm">{{ $t('table.reset') }}</el-button>
@@ -63,8 +63,8 @@
           <el-input v-model="temp.description" :autosize="{ minRows: 2, maxRows: 4}" type="textarea" placeholder="描述" />
         </el-form-item>
         <el-form-item :label="$t('table.status')" prop="enabled">
-          <el-select v-model="temp.enabled" class="filter-item" placeholder="Please select">
-            <el-option v-for="item in statusOptions" :key="item.id" :label="item.name" :value="item.id" />
+          <el-select v-model="temp.enabled" class="filter-item" placeholder="请选择">
+            <el-option v-for="item in addStatusOptions" :key="item.id" :label="item.name" :value="item.id" />
           </el-select>
         </el-form-item>
       </el-form>
@@ -107,9 +107,14 @@ export default {
         beginDate: '',
         endDate: '',
         name: '',
-        enabled: ''
+        enabled: -1
       },
       statusOptions: [
+        { id: -1, name: '全部' },
+        { id: 0, name: '禁用' },
+        { id: 1, name: '启用' }
+      ],
+      addStatusOptions: [
         { id: 0, name: '禁用' },
         { id: 1, name: '启用' }
       ],
