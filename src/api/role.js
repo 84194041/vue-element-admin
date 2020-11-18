@@ -31,3 +31,11 @@ export function updateRole(data) {
     data
   })
 }
+
+export function getTenantComboxData(query) {
+  return request({
+    url: '/Tenant/GetPagedList',
+    method: 'get',
+    params: query
+  })
+}

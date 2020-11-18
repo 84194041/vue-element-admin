@@ -8,7 +8,7 @@
     </div>
 
     <el-table :key="tableKey" v-loading="listLoading" :data="list" border fit highlight-current-row style="width: 100%;">
-      <el-table-column label="租户Id" min-width="200px" align="center">
+      <el-table-column label="租户Id" min-width="300px" align="center">
         <template slot-scope="{row}">
           <span>{{ row.tenantId }}</span>
         </template>
@@ -51,6 +51,25 @@
 
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
       <el-form ref="dataForm" :rules="rules" :model="temp" label-width="80px">
+        <el-form-item label="租户" prop="tenantId">
+          <el-select
+            v-model="temp.tenantId"
+            filterable
+            remote
+            reserve-keyword
+            placeholder="请输入关键词"
+            :remote-method="remoteMethod"
+            :loading="loading"
+            @focus="selectfocus"
+          >
+            <el-option
+              v-for="item in tenantComboxList"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            />
+          </el-select>
+        </el-form-item>
         <el-form-item label="角色名称" prop="name">
           <el-input v-model="temp.name" placeholder="请输入角色名称" />
         </el-form-item>
@@ -72,7 +91,7 @@
 </template>
 
 <script>
-import { getPagedList, createRole, deleteRole, updateRole } from '@/api/role'
+import { getPagedList, createRole, deleteRole, updateRole, getTenantComboxData } from '@/api/role'
 import waves from '@/directive/waves'
 import Pagination from '@/components/Pagination'
 import { parseTime } from '@/utils'
@@ -101,6 +120,15 @@ export default {
         pageSize: 20,
         name: ''
       },
+      loading: false,
+      tenantComboxList: null,
+      tenantComboxlistQuery: {
+        pageIndex: 1,
+        pageSize: 20,
+        name: '',
+        enabled: -1,
+        tenantId: ''
+      },
       addStatusOptions: [
         { id: 0, name: '禁用' },
         { id: 1, name: '启用' }
@@ -112,9 +140,11 @@ export default {
         id: 0,
         name: '',
         description: '',
-        enabled: 1
+        enabled: 1,
+        tenantId: '' 
       },
       rules: {
+        tenantId: [{ required: true, message: '请选择租户', trigger: 'change' }],
         name: [{ required: true, message: '角色名称不能为空', trigger: 'blur' }],
         enabled: [{ required: true, message: '请选择状态', trigger: 'change' }]
       }
@@ -124,6 +154,28 @@ export default {
     this.queryPageList()
   },
   methods: {
+    getTenantComboxData() {
+      getTenantComboxData(this.tenantComboxlistQuery).then(response => {
+        this.tenantComboxList = response.data.items.map(item => {
+          return { value: item.tenantId, label: item.name }
+        })
+      })
+    },
+    remoteMethod(query) {
+      if (query !== '') {
+        this.loading = true
+        setTimeout(() => {
+          this.loading = false
+          this.tenantComboxlistQuery.name = query
+          this.getTenantComboxData()
+        }, 200)
+      } else {
+        this.tenantComboxlistQuery.name = ''
+        this.getTenantComboxData()
+      }
+    },
+    selectfocus() {
+    },
     queryPageList() {
       this.listLoading = true
       getPagedList(this.listQuery).then(response => {
@@ -151,6 +203,7 @@ export default {
       this.queryPageList()
     },
     handleCreate() {
+      this.getTenantComboxData()
       this.resetTemp()
       this.dialogStatus = 'create'
       this.dialogFormVisible = true
@@ -175,6 +228,7 @@ export default {
       })
     },
     handleUpdate(row) {
+      this.getTenantComboxData()
       this.temp = Object.assign({}, row)
       this.dialogStatus = 'update'
       this.dialogFormVisible = true
