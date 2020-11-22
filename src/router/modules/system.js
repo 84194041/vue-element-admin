@@ -24,15 +24,15 @@ const tableRouter = {
       meta: { title: '角色管理', icon: 'peoples' }
     },
     {
-      path: 'payment',
-      component: () => import('@/views/system/payment'),
-      name: '支付宝支付',
-      meta: { title: '支付宝支付', icon: 'money' }
+      path: 'menu',
+      component: () => import('@/views/system/menu/index'),
+      name: '菜单管理',
+      meta: { title: '菜单管理', icon: 'el-icon-menu' }
     },
     {
-      path: 'index',
+      path: 'icons',
       component: () => import('@/views/icons/index'),
-      name: 'Icons',
+      name: '图标',
       meta: { title: 'icons', icon: 'icon' }
     }
   ]
