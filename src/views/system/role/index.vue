@@ -141,7 +141,7 @@ export default {
         name: '',
         description: '',
         enabled: 1,
-        tenantId: '' 
+        tenantId: ''
       },
       rules: {
         tenantId: [{ required: true, message: '请选择租户', trigger: 'change' }],

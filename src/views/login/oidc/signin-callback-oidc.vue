@@ -35,9 +35,9 @@ export default {
           //   this.state = e
           // })
           await this.login({
-              access_token: user.access_token
-              //access_token: 'admin-token'
-            }
+            access_token: user.access_token
+            // access_token: 'admin-token'
+          }
           ).catch(e => {
             this.state = e
           })

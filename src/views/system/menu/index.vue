@@ -3,15 +3,18 @@
     <div class="filter-container">
       <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-plus">{{ $t('table.add') }}</el-button>
     </div>
-    
-    <el-table v-loading="listLoading" :data="list"
+
+    <el-table
+      v-loading="listLoading"
+      :data="list"
       border
       fit
       highlight-current-row
       style="width: 100%"
       row-key="id"
       default-expand-all
-      :tree-props="{ children: 'childList', hasChildren: 'hasChildren' }">
+      :tree-props="{ children: 'childList', hasChildren: 'hasChildren' }"
+    >
       <el-table-column width="100px" align="center" label="icon">
         <template slot-scope="{row}">
           <svg-icon :icon-class="row.icon" class="meta-item__icon" />
@@ -23,7 +26,7 @@
           <span>{{ row.icon }}</span>
         </template>
       </el-table-column>
-            <el-table-column width="120px" align="center" label="path">
+      <el-table-column width="120px" align="center" label="path">
         <template slot-scope="{row}">
           <span>{{ row.path }}</span>
         </template>
@@ -63,7 +66,7 @@ export default {
       return statusMap[status]
     },
     statusStrFilter(status) {
-      return status === 1 ?  '启用' : '禁用'
+      return status === 1 ? '启用' : '禁用'
     }
   },
   data() {
